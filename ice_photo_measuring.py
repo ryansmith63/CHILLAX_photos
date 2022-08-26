@@ -7,10 +7,9 @@ import photo_processing as pp
 
 filepath = 'photos/ForRyan' 
 
-photos = np.zeros((len(os.listdir(filepath)),4928,6560),dtype=np.float)
 num_slices = 200
 slice_length = 450
-photo_slices = np.zeros((len(os.listdir(filepath)),slice_length))
+photo_slices = np.zeros((len(os.listdir(filepath)),slice_length)) 
 datetimes = []
 
 for i in range(len(os.listdir(filepath))): 
@@ -20,8 +19,8 @@ for i in range(len(os.listdir(filepath))):
     datetimes.append(file_datetime)
     
     #load photo in grayscale and profile pixel brightness across ice ring
-    photos[i] = np.asarray(Image.open(filepath + '/' + os.listdir(filepath)[i]).convert('L'),dtype=np.float)
-    photo_slices[i] = pp.slice_photo(photos[i])
+    photo = np.asarray(Image.open(filepath + '/' + os.listdir(filepath)[i]).convert('L'),dtype=np.float)
+    photo_slices[i] = pp.slice_photo(photo)
 
 #use start of profile, in region clear of ice, to find baseline
 baseline, std = pp.leading_baseline(photo_slices,300,0,100)
