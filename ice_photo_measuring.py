@@ -31,11 +31,12 @@ for i in range(len(photo_slices)):
     photo_dict = {}
     
     #find "pulses" corresponding to elevated pixel brightness
-    start, end = pp.std_dev_pulsefinding(processed_slices[i],std[i],300,100,rising_thresh=2.0,falling_thresh=1.0)
+    start, end = pp.std_dev_pulsefinding(processed_slices[i],std[i],300,60,rising_thresh=3.0,falling_thresh=1.0)
 
     photo_dict.update({('datetime') : datetimes[i]})
     photo_dict.update({('ice_start') : start})
     photo_dict.update({('ice_end') : end})
+    photo_dict.update({('pulse_height') : max(processed_slices[i][start:end])})
     rqs.append(photo_dict)
 
 rqs_df = pd.DataFrame(rqs)
